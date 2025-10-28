@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -158,7 +159,19 @@ class Blog extends Model
             }
         } while ($path !== $originalPath);
 
-        return Storage::disk('public')->url($path);
+        $disk = Storage::disk('public');
+
+        $url = $disk->url($path);
+
+        if ($disk->exists($path)) {
+            $publicStoragePath = public_path('storage/'.$path);
+
+            if (! File::exists($publicStoragePath)) {
+                return asset('storage/'.$path);
+            }
+        }
+
+        return $url;
     }
 
     protected function isStreamableFileUrl(string $url): bool
