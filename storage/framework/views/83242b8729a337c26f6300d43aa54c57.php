@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\levelminds-laravel\resources\views/pages/team.blade.php ENDPATH**/ ?>

@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Blog extends Model
+{
+    use HasFactory;
+
+    // ✅ Table name (if it’s not plural 'blogs', you can remove this line)
+    protected $table = 'blogs';
+
+    // ✅ Mass assignable fields (these can be filled using create() or update())
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'category_id',
+        'image',
+        'views',
+    ];
+
+    // ✅ Relationship: A blog belongs to one category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    // ✅ Relationship: A blog can have many likes
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+}
