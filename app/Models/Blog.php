@@ -159,17 +159,22 @@ class Blog extends Model
             return $path;
         };
 
-        $trimmedPath = ltrim($value, '/');
+        $trimmedPath = ltrim(str_replace('\\', '/', $value), '/');
 
-        $normalizedPath = $stripPrefixes($trimmedPath, ['public/', 'app/public/']);
+        $normalizedPath = ltrim($stripPrefixes($trimmedPath, ['public/', 'app/public/']), '/');
 
         if ($normalizedPath !== '' && File::exists(public_path($normalizedPath))) {
             return asset($normalizedPath);
         }
 
-        $storagePath = $stripPrefixes($trimmedPath, ['storage/', 'public/', 'app/public/']);
+        $storagePath = ltrim($stripPrefixes($trimmedPath, ['storage/', 'public/', 'app/public/']), '/');
+
+        if ($storagePath === '') {
+            return $fallback;
+        }
 
         $disk = Storage::disk('public');
+        $diskDriver = config('filesystems.disks.public.driver');
 
         try {
             $url = $disk->url($storagePath);
@@ -177,15 +182,27 @@ class Blog extends Model
             $url = null;
         }
 
-        if ($url && ! Str::startsWith($url, ['http://', 'https://', '//'])) {
-            $url = url($url);
+        if ($url) {
+            $url = str_replace('\\', '/', $url);
+        }
+
+        if ($diskDriver === 'local' && $disk->exists($storagePath)) {
+            return asset('storage/'.$storagePath);
+        }
+
+        if ($url) {
+            if (Str::startsWith($url, ['http://', 'https://', '//'])) {
+                return $url;
+            }
+
+            return url('/'.ltrim($url, '/'));
         }
 
         if ($disk->exists($storagePath)) {
-            return $url ?: asset('storage/'.$storagePath);
+            return asset('storage/'.$storagePath);
         }
 
-        return $url ?: $fallback;
+        return $fallback;
     }
 
     protected function isStreamableFileUrl(string $url): bool
