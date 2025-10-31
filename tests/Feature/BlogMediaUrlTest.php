@@ -116,4 +116,43 @@ class BlogMediaUrlTest extends TestCase
 
         $this->assertSame('https://cdn.example.com/image.png', $blog->thumbnail_url);
     }
+
+    public function test_public_disk_external_url_prefers_current_host(): void
+    {
+        $originalDiskUrl = config('filesystems.disks.public.url');
+
+        config(['filesystems.disks.public.url' => 'https://cdn.example.com/storage']);
+
+        Storage::fake('public');
+
+        Storage::disk('public')->put('thumbnails/regression.jpg', 'regression-image');
+        Storage::disk('public')->put('videos/regression.mp4', 'regression-video');
+
+        $blog = Blog::create([
+            'title' => 'Regression Host Preference',
+            'slug' => 'regression-host-preference-'.uniqid(),
+            'content' => '<p>Regression</p>',
+            'thumbnail' => 'thumbnails/regression.jpg',
+            'video_path' => 'videos/regression.mp4',
+            'media_type' => 'video',
+            'published_at' => now(),
+        ]);
+
+        $expectedThumbnailUrl = url('storage/thumbnails/regression.jpg');
+        $expectedVideoUrl = url('storage/videos/regression.mp4');
+
+        $this->assertSame($expectedThumbnailUrl, $blog->thumbnail_url);
+        $this->assertSame($expectedVideoUrl, $blog->video_stream_url);
+
+        $markup = Blade::render(
+            '<img src="{{ $blog->thumbnail_url }}"><video src="{{ $blog->video_stream_url }}"></video>',
+            ['blog' => $blog]
+        );
+
+        $this->assertStringContainsString('src="'.$expectedThumbnailUrl.'"', $markup);
+        $this->assertStringContainsString('src="'.$expectedVideoUrl.'"', $markup);
+        $this->assertStringNotContainsString('https://cdn.example.com', $markup);
+
+        config(['filesystems.disks.public.url' => $originalDiskUrl]);
+    }
 }
