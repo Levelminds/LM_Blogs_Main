@@ -174,7 +174,18 @@ class Blog extends Model
         }
 
         $disk = Storage::disk('public');
-        $diskDriver = config('filesystems.disks.public.driver');
+
+        $diskHasFile = false;
+
+        try {
+            $diskHasFile = $disk->exists($storagePath);
+        } catch (\Throwable $exception) {
+            $diskHasFile = false;
+        }
+
+        if ($diskHasFile) {
+            return asset('storage/'.$storagePath);
+        }
 
         try {
             $url = $disk->url($storagePath);
@@ -186,20 +197,12 @@ class Blog extends Model
             $url = str_replace('\\', '/', $url);
         }
 
-        if ($diskDriver === 'local' && $disk->exists($storagePath)) {
-            return asset('storage/'.$storagePath);
-        }
-
         if ($url) {
             if (Str::startsWith($url, ['http://', 'https://', '//'])) {
                 return $url;
             }
 
             return url('/'.ltrim($url, '/'));
-        }
-
-        if ($disk->exists($storagePath)) {
-            return asset('storage/'.$storagePath);
         }
 
         return $fallback;
