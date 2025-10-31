@@ -170,11 +170,11 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="{{ marketing_asset('branding/tour-1.jpg') }}" class="d-block w-100" alt="Applicant pipeline dashboard overview">
-                        <div class="lm-product-caption">Applicant pipeline: monitor every stage in one unified dashboard.</div>
+                        <div class="lm-product-caption">Applicant dashboard: monitor every stage in one unified dashboard.</div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ marketing_asset('branding/tour-5.jpg') }}" class="d-block w-100" alt="Teacher dashboard tracking applications">
-                        <div class="lm-product-caption">Teacher dashboard: keep educators updated with real-time status changes.</div>
+                        <div class="lm-product-caption">Institute dashboard: keep educators updated with real-time status changes.</div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ marketing_asset('branding/tour-4.jpg') }}" class="d-block w-100" alt="Interview scheduling interface">
