@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title>Marketing image placeholder</title>
+  <desc>Neutral gradient background with LevelMinds brand text indicating the asset is unavailable.</desc>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b7285" />
+      <stop offset="100%" stop-color="#3bc9db" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#gradient)" rx="24" ry="24" />
+  <g fill="#ffffff" font-family="'Inter', 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="50%" y="48%" font-size="64" font-weight="600">LevelMinds</text>
+    <text x="50%" y="60%" font-size="28" opacity="0.85">Marketing artwork currently unavailable</text>
+  </g>
+</svg>
