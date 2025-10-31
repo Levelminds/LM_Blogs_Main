@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="lm-product-frame">
-                    <img src="{{ marketing_asset('careers1.png') }}" alt="LevelMinds team collaborating in a modern workspace">
+                    <img src="{{ marketing_asset('branding/careers-hero.jpg') }}" alt="LevelMinds team collaborating in a modern workspace">
                 </div>
             </div>
         </div>
