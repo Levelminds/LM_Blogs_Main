@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <figure>
-                    <img src="{{ marketing_asset('tour-3.jpg') }}" alt="Screenshot of the LevelMinds pipeline dashboard">
+                    <img src="{{ marketing_asset('branding/tour-1.jpg') }}" alt="Screenshot of the LevelMinds pipeline dashboard">
                     <figcaption class="visually-hidden">Pipeline dashboard showcasing hiring stages and candidate progress.</figcaption>
                 </figure>
             </div>
@@ -169,31 +169,31 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ marketing_asset('tour-1.jpg') }}" class="d-block w-100" alt="Applicant pipeline dashboard overview">
+                        <img src="{{ marketing_asset('branding/tour-1.jpg') }}" class="d-block w-100" alt="Applicant pipeline dashboard overview">
                         <div class="lm-product-caption">Applicant pipeline: monitor every stage in one unified dashboard.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-2.jpg') }}" class="d-block w-100" alt="Teacher dashboard tracking applications">
+                        <img src="{{ marketing_asset('branding/tour-5.jpg') }}" class="d-block w-100" alt="Teacher dashboard tracking applications">
                         <div class="lm-product-caption">Teacher dashboard: keep educators updated with real-time status changes.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-3.jpg') }}" class="d-block w-100" alt="Interview scheduling interface">
+                        <img src="{{ marketing_asset('branding/tour-4.jpg') }}" class="d-block w-100" alt="Interview scheduling interface">
                         <div class="lm-product-caption">Scheduling: align interview panels and reminders without leaving LevelMinds.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-4.jpg') }}" class="d-block w-100" alt="Candidate profile with teaching evidence">
+                        <img src="{{ marketing_asset('branding/tour-7.jpg') }}" class="d-block w-100" alt="Candidate profile with teaching evidence">
                         <div class="lm-product-caption">Candidate profile: review teaching evidence, lesson plans, and credentials.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-5.jpg') }}" class="d-block w-100" alt="Scorecard review and feedback screen">
+                        <img src="{{ marketing_asset('branding/tour-6.jpg') }}" class="d-block w-100" alt="Scorecard review and feedback screen">
                         <div class="lm-product-caption">Scorecards: capture rubric-aligned feedback from every panelist.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-6.jpg') }}" class="d-block w-100" alt="Hiring analytics snapshot">
+                        <img src="{{ marketing_asset('branding/tour-3.jpg') }}" class="d-block w-100" alt="Hiring analytics snapshot">
                         <div class="lm-product-caption">Analytics: understand pipeline health and the sources bringing great teachers.</div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ marketing_asset('tour-7.jpg') }}" class="d-block w-100" alt="Team tasks and follow-up checklist">
+                        <img src="{{ marketing_asset('branding/tour-2.jpg') }}" class="d-block w-100" alt="Team tasks and follow-up checklist">
                         <div class="lm-product-caption">Tasks: keep hiring teams aligned with task lists and follow-up nudges.</div>
                     </div>
                 </div>
