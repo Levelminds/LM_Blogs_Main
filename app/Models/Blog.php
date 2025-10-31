@@ -171,17 +171,21 @@ class Blog extends Model
 
         $disk = Storage::disk('public');
 
-        $url = $disk->url($storagePath);
-
-        if ($disk->exists($storagePath)) {
-            $publicStoragePath = public_path('storage/'.$storagePath);
-
-            if (! File::exists($publicStoragePath)) {
-                return asset('storage/'.$storagePath);
-            }
+        try {
+            $url = $disk->url($storagePath);
+        } catch (\Throwable $exception) {
+            $url = null;
         }
 
-        return $url;
+        if ($url && ! Str::startsWith($url, ['http://', 'https://', '//'])) {
+            $url = url($url);
+        }
+
+        if ($disk->exists($storagePath)) {
+            return $url ?: asset('storage/'.$storagePath);
+        }
+
+        return $url ?: $fallback;
     }
 
     protected function isStreamableFileUrl(string $url): bool
