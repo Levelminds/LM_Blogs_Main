@@ -145,29 +145,39 @@ class Blog extends Model
             return $value;
         }
 
-        $path = ltrim($value, '/');
+        $stripPrefixes = static function (string $path, array $prefixes): string {
+            do {
+                $originalPath = $path;
 
-        $prefixes = ['storage/', 'public/', 'app/public/'];
-
-        do {
-            $originalPath = $path;
-
-            foreach ($prefixes as $prefix) {
-                if (Str::startsWith($path, $prefix)) {
-                    $path = substr($path, strlen($prefix));
+                foreach ($prefixes as $prefix) {
+                    if (Str::startsWith($path, $prefix)) {
+                        $path = substr($path, strlen($prefix));
+                    }
                 }
-            }
-        } while ($path !== $originalPath);
+            } while ($path !== $originalPath);
+
+            return $path;
+        };
+
+        $trimmedPath = ltrim($value, '/');
+
+        $normalizedPath = $stripPrefixes($trimmedPath, ['public/', 'app/public/']);
+
+        if ($normalizedPath !== '' && File::exists(public_path($normalizedPath))) {
+            return asset($normalizedPath);
+        }
+
+        $storagePath = $stripPrefixes($trimmedPath, ['storage/', 'public/', 'app/public/']);
 
         $disk = Storage::disk('public');
 
-        $url = $disk->url($path);
+        $url = $disk->url($storagePath);
 
-        if ($disk->exists($path)) {
-            $publicStoragePath = public_path('storage/'.$path);
+        if ($disk->exists($storagePath)) {
+            $publicStoragePath = public_path('storage/'.$storagePath);
 
             if (! File::exists($publicStoragePath)) {
-                return asset('storage/'.$path);
+                return asset('storage/'.$storagePath);
             }
         }
 

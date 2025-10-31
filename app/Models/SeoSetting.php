@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class SeoSetting extends Model
@@ -54,19 +55,43 @@ class SeoSetting extends Model
 
         $path = ltrim($this->default_og_image, '/');
 
+        $publicPath = $path;
+
+        $prefixes = ['public/', 'app/public/'];
+
+        do {
+            $originalPath = $publicPath;
+
+            foreach ($prefixes as $prefix) {
+                if (str_starts_with($publicPath, $prefix)) {
+                    $publicPath = substr($publicPath, strlen($prefix));
+                }
+            }
+        } while ($publicPath !== $originalPath);
+
+        if ($publicPath !== '' && File::exists(public_path($publicPath))) {
+            return asset($publicPath);
+        }
+
         if (str_starts_with($path, 'storage/')) {
             return asset($path);
         }
 
-        if (str_starts_with($path, 'public/')) {
-            return Storage::url(substr($path, strlen('public/')));
-        }
+        $storagePath = $path;
 
-        if (str_starts_with($path, 'app/public/')) {
-            return Storage::url(substr($path, strlen('app/public/')));
-        }
+        $storagePrefixes = ['storage/', 'public/', 'app/public/'];
 
-        return Storage::url($path);
+        do {
+            $originalPath = $storagePath;
+
+            foreach ($storagePrefixes as $prefix) {
+                if (str_starts_with($storagePath, $prefix)) {
+                    $storagePath = substr($storagePath, strlen($prefix));
+                }
+            }
+        } while ($storagePath !== $originalPath);
+
+        return Storage::url($storagePath);
     }
 
     public static function forgetCache(): void
