@@ -185,13 +185,7 @@ class Blog extends Model
         }
 
         if ($diskHasFile) {
-            try {
-                if (Route::has('storage.proxy')) {
-                    return route('storage.proxy', ['path' => $storagePath]);
-                }
-            } catch (\Throwable $exception) {
-                // If the route system is unavailable, fall through to other URL strategies.
-            }
+            return route('storage.proxy', ['path' => $storagePath]);
         }
 
         try {
