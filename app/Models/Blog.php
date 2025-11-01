@@ -185,7 +185,9 @@ class Blog extends Model
         }
 
         if ($diskHasFile) {
-            return route('storage.proxy', ['path' => $storagePath]);
+            if (Route::has('storage.proxy')) {
+                return route('storage.proxy', ['path' => $storagePath]);
+            }
         }
 
         try {
