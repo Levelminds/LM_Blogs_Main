@@ -13,7 +13,10 @@ class StorageProxyController extends Controller
      */
     public function __invoke(string $path): StreamedResponse
     {
-        $normalizedPath = str_replace('\\', '/', $path);
+        $decodedPath = rawurldecode($path);
+
+        $normalizedPath = str_replace('\\', '/', $decodedPath);
+        $normalizedPath = preg_replace('#/{2,}#', '/', $normalizedPath);
         $normalizedPath = ltrim($normalizedPath, '/');
 
         if ($this->isInvalidPath($normalizedPath)) {
