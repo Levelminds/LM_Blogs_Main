@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -184,7 +185,13 @@ class Blog extends Model
         }
 
         if ($diskHasFile) {
-            return asset('storage/'.$storagePath);
+            try {
+                if (Route::has('storage.proxy')) {
+                    return route('storage.proxy', ['path' => $storagePath]);
+                }
+            } catch (\Throwable $exception) {
+                // If the route system is unavailable, fall through to other URL strategies.
+            }
         }
 
         try {
