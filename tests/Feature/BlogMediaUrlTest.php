@@ -29,7 +29,7 @@ class BlogMediaUrlTest extends TestCase
         ]);
 
         $this->assertSame(
-            url('storage/thumbnails/example.jpg'),
+            route('storage.proxy', ['path' => 'thumbnails/example.jpg']),
             $blog->thumbnail_url
         );
     }
@@ -52,7 +52,7 @@ class BlogMediaUrlTest extends TestCase
         ]);
 
         $this->assertSame(
-            url('storage/thumbnails/missing-prefix.jpg'),
+            route('storage.proxy', ['path' => 'thumbnails/missing-prefix.jpg']),
             $blog->thumbnail_url
         );
     }
@@ -73,7 +73,7 @@ class BlogMediaUrlTest extends TestCase
         ]);
 
         $this->assertSame(
-            url('storage/videos/example.mp4'),
+            route('storage.proxy', ['path' => 'videos/example.mp4']),
             $blog->video_stream_url
         );
     }
@@ -100,7 +100,7 @@ class BlogMediaUrlTest extends TestCase
         ]);
 
         $this->assertStringContainsString(
-            'src="'.url('storage/thumbnails/rendered.jpg').'"',
+            'src="'.route('storage.proxy', ['path' => 'thumbnails/rendered.jpg']).'"',
             $markup
         );
     }
@@ -138,8 +138,8 @@ class BlogMediaUrlTest extends TestCase
             'published_at' => now(),
         ]);
 
-        $expectedThumbnailUrl = url('storage/thumbnails/regression.jpg');
-        $expectedVideoUrl = url('storage/videos/regression.mp4');
+        $expectedThumbnailUrl = route('storage.proxy', ['path' => 'thumbnails/regression.jpg']);
+        $expectedVideoUrl = route('storage.proxy', ['path' => 'videos/regression.mp4']);
 
         $this->assertSame($expectedThumbnailUrl, $blog->thumbnail_url);
         $this->assertSame($expectedVideoUrl, $blog->video_stream_url);

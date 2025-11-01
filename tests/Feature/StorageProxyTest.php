@@ -37,4 +37,16 @@ class StorageProxyTest extends TestCase
 
         $response->assertNotFound();
     }
+
+    public function test_it_decodes_url_encoded_paths(): void
+    {
+        Storage::fake('public');
+
+        Storage::disk('public')->put('thumbnails/My File #1.png', 'encoded content');
+
+        $response = $this->get('/storage/thumbnails/'.rawurlencode('My File #1.png'));
+
+        $response->assertOk();
+        $this->assertSame('encoded content', $response->streamedContent());
+    }
 }

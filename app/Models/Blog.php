@@ -184,7 +184,7 @@ class Blog extends Model
         }
 
         if ($diskHasFile) {
-            return asset('storage/'.$storagePath);
+            return route('storage.proxy', ['path' => $storagePath]);
         }
 
         try {
