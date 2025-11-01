@@ -1,11 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\StorageProxyController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/storage/{path}', StorageProxyController::class)
+    ->where('path', '.*')
+    ->name('storage.proxy');
 
 // -------------------------------
 // Static Pages (Landing Sections)
